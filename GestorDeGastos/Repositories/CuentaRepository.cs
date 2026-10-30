@@ -1,0 +1,146 @@
+﻿using GestorDeGastos.Models;
+using MySqlConnector;
+
+namespace GestorDeGastos.Repositories
+{
+    public class CuentaRepository
+    {
+        private readonly string _connectionString;
+        public CuentaRepository()
+        {
+            _connectionString = "Server=localhost;Port=3306;Database=gestor_gastos;User=root;Password=;";
+        }
+        //CREATE
+        public int Crear(Cuenta cuenta)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+
+            string sql = @"
+                INSERT INTO cuenta (Nombre,NumeroCuenta, Saldo, UsuarioId)
+                VALUES (@Nombre, @NumeroCuenta, @Saldo, @UsuarioId);
+
+                SELECT LAST_INSERT_ID();
+            ";
+
+            using var command = new MySqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Nombre", cuenta.Nombre);
+            command.Parameters.AddWithValue("@NumeroCuenta", cuenta.NumeroCuenta);
+            command.Parameters.AddWithValue("@Saldo", cuenta.Saldo);
+            command.Parameters.AddWithValue("@UsuarioId", cuenta.UsuarioId);
+
+            int id = Convert.ToInt32(command.ExecuteScalar());
+
+            return id;
+        }
+        //READ - obtener todos
+
+        public List<Cuenta> ObtenerTodos()
+        {
+            var cuentas = new List<Cuenta>();
+
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+
+            string sql = @"
+                SELECT Id, Nombre, NumeroCuenta, Saldo, UsuarioId
+                FROM cuenta;
+            ";
+
+            using var command = new MySqlCommand(sql, connection);
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var cuenta = new Cuenta(
+                        reader.GetInt32("Id"),
+                        reader.GetString("Nombre"),
+                        reader.GetString("NumeroCuenta"),
+                        reader.GetDecimal("Saldo"),
+                        reader.GetInt32("UsuarioId")
+                );
+
+                cuentas.Add(cuenta);
+            }
+            return cuentas;
+        }
+
+        //READ - obtener por Id
+
+        public Cuenta? ObtenerPorId(int id)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+
+            string sql = @"
+            SELECT Id, Nombre, NumeroCuenta, Saldo, UsuarioId
+            FROM cuenta
+            WHERE Id = @Id;
+        ";
+            using var command = new MySqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@Id", id);
+
+            using var reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                return new Cuenta(
+                        reader.GetInt32("Id"),
+                        reader.GetString("Nombre"),
+                        reader.GetString("NumeroCuenta"),
+                        reader.GetDecimal("Saldo"),
+                        reader.GetInt32("UsuarioId")
+                    );
+            }
+
+            return null;
+        }
+        // UPDATE
+        public bool Actualizar(Cuenta cuenta)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+
+            string sql = @"
+            UPDATE cuenta
+            SET
+                Nombre = @Nombre, 
+                NumeroCuenta = @NumeroCuenta,
+                Saldo = @Saldo, 
+                UsuarioId = @UsuarioId
+            WHERE Id = @Id;
+        ";
+            using var command = new MySqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@Nombre", cuenta.Nombre);
+            command.Parameters.AddWithValue("@Id", cuenta.Id);
+            command.Parameters.AddWithValue("@NumeroCuenta", cuenta.NumeroCuenta);
+            command.Parameters.AddWithValue("@Saldo", cuenta.Saldo);
+            command.Parameters.AddWithValue("@UsuarioId", cuenta.UsuarioId);
+
+            int filasAfectadas = command.ExecuteNonQuery();
+
+            return filasAfectadas > 0;
+        }
+
+        //DELETE
+        public bool Eliminar(int id)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+
+            string sql = @"
+            DELETE FROM cuenta
+            WHERE Id = @Id;
+        ";
+            using var command = new MySqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@Id", id);
+
+            int filasAfectadas = command.ExecuteNonQuery();
+
+            return filasAfectadas > 0;
+        }
+    }
+}

@@ -6,7 +6,7 @@
         public string Nombre { get; set; }
         public string NumeroCuenta { get; set; }
         public decimal Saldo { get; set; }
-        public int UsuarioId;
+        public int UsuarioId { get; set; }
 
         public Cuenta(int id, string nombre, string numeroCuenta, decimal saldo, int usuarioId)
         {
