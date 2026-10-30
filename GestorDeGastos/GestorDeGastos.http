@@ -1,0 +1,6 @@
+@GestorDeGastos_HostAddress = http://localhost:5198
+
+GET {{GestorDeGastos_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
