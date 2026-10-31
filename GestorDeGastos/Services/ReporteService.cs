@@ -30,5 +30,13 @@ namespace GestorDeGastos.Services
                 Balance = ingresos - gastos
             };
         }
+
+        public List<TotalPorCategoria> ObtenerGastosPorCategoria(int usuarioId, int anio, int mes)
+        {
+            DateTime desde = new DateTime(anio, mes, 1);
+            DateTime hasta = desde.AddMonths(1);
+
+            return _repository.ObtenerGastosPorCategoria(usuarioId, desde, hasta);
+        }
     }
 }

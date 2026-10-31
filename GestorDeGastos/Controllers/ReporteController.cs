@@ -24,5 +24,13 @@ namespace GestorDeGastos.Controllers
         {
             return _service.ObtenerBalanceMensual(usuarioId, anio, mes);
         }
+
+        // GET: api/Reporte/gastos-por-categoria?usuarioId=2&anio=2026&mes=10
+        [HttpGet("gastos-por-categoria")]
+        public List<TotalPorCategoria> GastosPorCategoria([FromQuery] int usuarioId, [FromQuery] int anio, [FromQuery] int mes)
+        {
+            return _service.ObtenerGastosPorCategoria(usuarioId, anio, mes);
+        }
     }
+
 }

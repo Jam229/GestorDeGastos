@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using GestorDeGastos.Models;
+using MySqlConnector;
 
 namespace GestorDeGastos.Repositories
 {
@@ -53,6 +54,46 @@ namespace GestorDeGastos.Repositories
             command.Parameters.AddWithValue("@Hasta", hasta);
 
             return Convert.ToDecimal(command.ExecuteScalar());
+        }
+
+        public List<TotalPorCategoria> ObtenerGastosPorCategoria(int usuarioId, DateTime desde, DateTime hasta)
+        {
+            var totalesPorCategoria = new List<TotalPorCategoria>();
+
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+
+            string sql = @"
+                SELECT cat.Id, cat.Nombre, SUM(g.Valor) AS Total
+                FROM gasto g
+                INNER JOIN cuenta c ON c.Id = g.CuentaId
+                INNER JOIN categoria cat ON cat.Id = g.CategoriaId
+                WHERE c.UsuarioId = @UsuarioId
+                    AND g.Fecha >= @Desde
+                    AND g.Fecha < @Hasta
+                GROUP BY cat.Id, cat.Nombre
+                ORDER BY Total DESC;
+            ";
+            using var command = new MySqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@UsuarioId", usuarioId);
+            command.Parameters.AddWithValue("@Desde", desde);
+            command.Parameters.AddWithValue("@Hasta", hasta);
+
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var totalPorCategoria = new TotalPorCategoria
+                {
+                    CategoriaId = reader.GetInt32("Id"),
+                    Categoria = reader.GetString("Nombre"),
+                    Total = reader.GetDecimal("Total")
+
+                };
+                totalesPorCategoria.Add(totalPorCategoria);
+            }
+            return totalesPorCategoria;
+
         }
     }
 }
