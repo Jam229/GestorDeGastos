@@ -7,7 +7,7 @@
         public decimal MontoObjetivo { get; set; }
         public decimal MontoActual { get; set; }
         public DateTime FechaLimite { get; set; }
-        public int CuentaId;
+        public int CuentaId { get; set; }
 
         public MetaAhorro(int id, string nombre, decimal montoObjetivo, decimal montoActual, DateTime fechaLimite, int cuentaId)
         {
