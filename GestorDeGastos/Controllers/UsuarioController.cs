@@ -17,6 +17,14 @@ namespace GestorDeGastos.Controllers
             this._service = new UsuarioService();
         }
 
+        // POST: api/Usuario/verificar
+
+        [HttpPost("verificar")]
+        public bool Verificar([FromBody] VerificarContrasenaRequest request)
+        {
+            return _service.VerificarContrasena(request.Documento, request.Contrasena);
+        }
+
 
         // GET: api/<UsuarioController>
         [HttpGet]

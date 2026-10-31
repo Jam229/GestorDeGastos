@@ -66,6 +66,39 @@ namespace GestorDeGastos.Repositories
             }
             return usuarios;
         }
+        // READ - obterner por Documento
+
+        public Usuario? ObtenerPorDocumento(string documento)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+
+            string sql = @"
+            SELECT Id, Nombre, Apellido, Documento, Correo, ContrasenaHash
+            FROM usuario
+            WHERE Documento = @Documento;
+        ";
+            using var command = new MySqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@Documento", documento);
+
+            using var reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                return new Usuario(
+                        reader.GetInt32("Id"),
+                        reader.GetString("Nombre"),
+                        reader.GetString("Apellido"),
+                        reader.GetString("Documento"),
+                        reader.GetString("Correo"),
+                        reader.GetString("ContrasenaHash")
+                    );
+            }
+
+            return null;
+
+        }
 
         //READ - obtener por Id
 
