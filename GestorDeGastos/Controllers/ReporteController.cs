@@ -31,6 +31,13 @@ namespace GestorDeGastos.Controllers
         {
             return _service.ObtenerGastosPorCategoria(usuarioId, anio, mes);
         }
+
+        // GET: api/Reporte/progreso-meta/1
+        [HttpGet("progreso-meta/{metaId}")]
+        public ProgresoMeta? ProgresoDeMeta(int metaId)
+        {
+            return _service.ObtenerProgresoMeta(metaId);
+        }
     }
 
 }
