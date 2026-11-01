@@ -1,5 +1,6 @@
 ﻿using GestorDeGastos.Models;
 using MySqlConnector;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GestorDeGastos.Repositories
 {
@@ -94,6 +95,29 @@ namespace GestorDeGastos.Repositories
             }
             return totalesPorCategoria;
 
+        }
+
+        public decimal ObtenerTotalGastosPorCategoria(int usuarioId, int categoriaId, DateTime desde, DateTime hasta)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+
+            string sql = @"
+                SELECT COALESCE(SUM(g.Valor), 0) AS TotalGastado
+                FROM gasto g
+                INNER JOIN cuenta c ON c.Id = g.CuentaId
+                WHERE c.UsuarioId = @UsuarioId
+                    AND g.CategoriaId = @CategoriaId
+                    AND g.Fecha >= @Desde
+                    AND g.Fecha <= @Hasta;
+            ";
+            using var command = new MySqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@UsuarioId", usuarioId);
+            command.Parameters.AddWithValue("@CategoriaId", categoriaId);
+            command.Parameters.AddWithValue("@Desde", desde);
+            command.Parameters.AddWithValue("@Hasta", hasta);
+
+            return Convert.ToDecimal(command.ExecuteScalar());
         }
     }
 }

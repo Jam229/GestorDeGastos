@@ -7,12 +7,19 @@ namespace GestorDeGastos.Services
     {
         private readonly ReporteRepository _repository;
         private readonly MetaAhorroRepository _metaRepository;
+        private readonly PresupuestoRepository _presupuestoRepository;
+        private readonly CategoriaRepository _categoriaRepository;
 
         public ReporteService()
         {
             _repository = new ReporteRepository();
 
             _metaRepository = new MetaAhorroRepository();
+
+            _presupuestoRepository = new PresupuestoRepository();
+
+            _categoriaRepository = new CategoriaRepository();
+            
         }
 
         public BalanceMensual ObtenerBalanceMensual(int usuarioId, int anio, int mes)
@@ -69,6 +76,60 @@ namespace GestorDeGastos.Services
                 MontoFaltante = faltante,
                 PorcentajeAvance = porcentaje,
                 Cumplida = meta.MontoObjetivo > 0 && meta.MontoActual >= meta.MontoObjetivo
+            };
+        }
+
+        public EstadoPresupuesto? ObtenerEstadoPresupuesto(int presupuestoId)
+        {
+            Presupuesto? presupuesto = _presupuestoRepository.ObtenerPorId(presupuestoId);
+
+            if (presupuesto == null)
+            {
+                return null;
+            }
+
+            Categoria? categoria = _categoriaRepository.ObtenerPorId(presupuesto.CategoriaId);
+
+            decimal gastado = _repository.ObtenerTotalGastosPorCategoria(
+                presupuesto.UsuarioId,
+                presupuesto.CategoriaId,
+                presupuesto.FechaInicio,
+                presupuesto.FechaFin);
+
+            decimal porcentaje = 0;
+
+            if (presupuesto.ValorLimite > 0)
+            {
+                porcentaje = Math.Round(gastado / presupuesto.ValorLimite * 100, 2);
+            }
+
+            string estado;
+
+            if (gastado > presupuesto.ValorLimite)
+            {
+                estado = "Excedido";
+            }
+            else if (presupuesto.ValorLimite > 0 && gastado >= presupuesto.ValorLimite * 0.8m)
+            {
+                estado = "Cerca del límite";
+            }
+            else
+            {
+                estado = "Dentro del límite";
+            }
+
+            return new EstadoPresupuesto
+            {
+                PresupuestoId = presupuesto.Id,
+                Categoria = categoria?.Nombre ?? string.Empty,
+                FechaInicio = presupuesto.FechaInicio,
+                FechaFin = presupuesto.FechaFin,
+                ValorLimite = presupuesto.ValorLimite,
+                TotalGastado = gastado,
+                Disponible = presupuesto.ValorLimite - gastado,
+                PorcentajeConsumido = porcentaje,
+                Excedido = gastado > presupuesto.ValorLimite,
+                Estado = estado
             };
         }
 

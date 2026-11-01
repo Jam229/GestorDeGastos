@@ -38,6 +38,13 @@ namespace GestorDeGastos.Controllers
         {
             return _service.ObtenerProgresoMeta(metaId);
         }
+
+        // GET: api/Reporte/estado-presupuesto/3
+        [HttpGet("estado-presupuesto/{presupuestoId}")]
+        public EstadoPresupuesto? EstadoDePresupuesto(int presupuestoId)
+        {
+            return _service.ObtenerEstadoPresupuesto(presupuestoId);
+        }
     }
 
 }
