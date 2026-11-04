@@ -142,5 +142,56 @@ namespace GestorDeGastos.Repositories
 
             return filasAfectadas > 0;
         }
+
+        // TRANSFERENCIA
+
+        public bool Transferir(int cuentaOrigenId, int cuentaDestinoId, decimal monto)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+
+            string sqlDebito = @"
+            UPDATE cuenta
+            SET Saldo = Saldo - @Monto
+            WHERE Id = @CuentaId AND Saldo >= @Monto;
+        ";
+            using var comandoDebito = new MySqlCommand(sqlDebito, connection);
+            comandoDebito.Parameters.AddWithValue("@CuentaId", cuentaOrigenId);
+            comandoDebito.Parameters.AddWithValue("@Monto", monto);
+
+            if (comandoDebito.ExecuteNonQuery() == 0)
+            {
+                return false;
+            }
+
+            string sqlCredito = @"
+            UPDATE cuenta
+            SET Saldo = Saldo + @Monto
+            WHERE Id = @CuentaId;
+        ";
+
+            using var comandoCredito = new MySqlCommand(sqlCredito, connection);
+            comandoCredito.Parameters.AddWithValue("@CuentaId", cuentaDestinoId);
+            comandoCredito.Parameters.AddWithValue("@Monto", monto);
+
+            if (comandoCredito.ExecuteNonQuery() == 0)
+            {
+
+                string sqlReverso = @"
+                UPDATE cuenta
+                SET Saldo = Saldo + @Monto
+                WHERE Id = @CuentaId;
+            ";
+                using var comandoReverso = new MySqlCommand(sqlReverso, connection);
+                comandoReverso.Parameters.AddWithValue("@CuentaId", cuentaOrigenId);
+                comandoReverso.Parameters.AddWithValue("@Monto", monto);
+
+                comandoReverso.ExecuteNonQuery();
+                return false;
+            }
+
+            return true;
+
+        }
     }
 }
