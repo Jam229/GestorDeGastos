@@ -2,10 +2,10 @@
 -- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 04-11-2026 a las 06:53:35
--- Versión del servidor: 10.11.16-MariaDB
--- Versión de PHP: 8.3.36
+-- Host: 127.0.0.1
+-- Generation Time: Nov 09, 2026 at 07:35 PM
+-- Server version: 10.11.16-MariaDB
+-- PHP Version: 8.3.36
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `gestor_gastos`
+-- Database: `gestor_gastos`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categoria`
+-- Table structure for table `categoria`
 --
 
 CREATE TABLE `categoria` (
@@ -33,7 +33,7 @@ CREATE TABLE `categoria` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `categoria`
+-- Dumping data for table `categoria`
 --
 
 INSERT INTO `categoria` (`Id`, `Nombre`) VALUES
@@ -46,7 +46,7 @@ INSERT INTO `categoria` (`Id`, `Nombre`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `cuenta`
+-- Table structure for table `cuenta`
 --
 
 CREATE TABLE `cuenta` (
@@ -58,7 +58,7 @@ CREATE TABLE `cuenta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `cuenta`
+-- Dumping data for table `cuenta`
 --
 
 INSERT INTO `cuenta` (`Id`, `Nombre`, `NumeroCuenta`, `Saldo`, `UsuarioId`) VALUES
@@ -69,7 +69,7 @@ INSERT INTO `cuenta` (`Id`, `Nombre`, `NumeroCuenta`, `Saldo`, `UsuarioId`) VALU
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `etiqueta`
+-- Table structure for table `etiqueta`
 --
 
 CREATE TABLE `etiqueta` (
@@ -78,7 +78,7 @@ CREATE TABLE `etiqueta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `etiqueta`
+-- Dumping data for table `etiqueta`
 --
 
 INSERT INTO `etiqueta` (`Id`, `Nombre`) VALUES
@@ -94,7 +94,7 @@ INSERT INTO `etiqueta` (`Id`, `Nombre`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `gasto`
+-- Table structure for table `gasto`
 --
 
 CREATE TABLE `gasto` (
@@ -108,7 +108,7 @@ CREATE TABLE `gasto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `gasto`
+-- Dumping data for table `gasto`
 --
 
 INSERT INTO `gasto` (`Id`, `Descripcion`, `Valor`, `Fecha`, `MetodoPagoId`, `CategoriaId`, `CuentaId`) VALUES
@@ -127,7 +127,7 @@ INSERT INTO `gasto` (`Id`, `Descripcion`, `Valor`, `Fecha`, `MetodoPagoId`, `Cat
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `gasto_etiqueta`
+-- Table structure for table `gasto_etiqueta`
 --
 
 CREATE TABLE `gasto_etiqueta` (
@@ -137,7 +137,7 @@ CREATE TABLE `gasto_etiqueta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `gasto_etiqueta`
+-- Dumping data for table `gasto_etiqueta`
 --
 
 INSERT INTO `gasto_etiqueta` (`Id`, `GastoId`, `EtiquetaId`) VALUES
@@ -152,7 +152,7 @@ INSERT INTO `gasto_etiqueta` (`Id`, `GastoId`, `EtiquetaId`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ingreso`
+-- Table structure for table `ingreso`
 --
 
 CREATE TABLE `ingreso` (
@@ -164,7 +164,7 @@ CREATE TABLE `ingreso` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `ingreso`
+-- Dumping data for table `ingreso`
 --
 
 INSERT INTO `ingreso` (`Id`, `Descripcion`, `Valor`, `Fecha`, `CuentaId`) VALUES
@@ -178,7 +178,7 @@ INSERT INTO `ingreso` (`Id`, `Descripcion`, `Valor`, `Fecha`, `CuentaId`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `meta_ahorro`
+-- Table structure for table `meta_ahorro`
 --
 
 CREATE TABLE `meta_ahorro` (
@@ -191,7 +191,7 @@ CREATE TABLE `meta_ahorro` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `meta_ahorro`
+-- Dumping data for table `meta_ahorro`
 --
 
 INSERT INTO `meta_ahorro` (`Id`, `Nombre`, `MontoObjetivo`, `MontoActual`, `FechaLimite`, `CuentaId`) VALUES
@@ -202,7 +202,7 @@ INSERT INTO `meta_ahorro` (`Id`, `Nombre`, `MontoObjetivo`, `MontoActual`, `Fech
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `metodo_pago`
+-- Table structure for table `metodo_pago`
 --
 
 CREATE TABLE `metodo_pago` (
@@ -211,7 +211,7 @@ CREATE TABLE `metodo_pago` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `metodo_pago`
+-- Dumping data for table `metodo_pago`
 --
 
 INSERT INTO `metodo_pago` (`Id`, `Nombre`) VALUES
@@ -222,7 +222,7 @@ INSERT INTO `metodo_pago` (`Id`, `Nombre`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `presupuesto`
+-- Table structure for table `presupuesto`
 --
 
 CREATE TABLE `presupuesto` (
@@ -235,7 +235,7 @@ CREATE TABLE `presupuesto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `presupuesto`
+-- Dumping data for table `presupuesto`
 --
 
 INSERT INTO `presupuesto` (`Id`, `ValorLimite`, `FechaInicio`, `FechaFin`, `CategoriaId`, `UsuarioId`) VALUES
@@ -247,7 +247,7 @@ INSERT INTO `presupuesto` (`Id`, `ValorLimite`, `FechaInicio`, `FechaFin`, `Cate
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuario`
+-- Table structure for table `usuario`
 --
 
 CREATE TABLE `usuario` (
@@ -260,7 +260,7 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `usuario`
+-- Dumping data for table `usuario`
 --
 
 INSERT INTO `usuario` (`Id`, `Nombre`, `Apellido`, `Documento`, `Correo`, `ContrasenaHash`) VALUES
@@ -269,17 +269,17 @@ INSERT INTO `usuario` (`Id`, `Nombre`, `Apellido`, `Documento`, `Correo`, `Contr
 (7, 'Carla', 'Ruiz', '1000000003', 'carla.ruiz@example.com', '600000.wZI8H3dRLirBFbrZGwEK6g==.1lEf0JCikvmv1s1uZuAHpRpaw37+U8PIWMqyXMuuPfE=');
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `categoria`
+-- Indexes for table `categoria`
 --
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`Id`);
 
 --
--- Indices de la tabla `cuenta`
+-- Indexes for table `cuenta`
 --
 ALTER TABLE `cuenta`
   ADD PRIMARY KEY (`Id`),
@@ -287,13 +287,13 @@ ALTER TABLE `cuenta`
   ADD KEY `UsuarioId` (`UsuarioId`);
 
 --
--- Indices de la tabla `etiqueta`
+-- Indexes for table `etiqueta`
 --
 ALTER TABLE `etiqueta`
   ADD PRIMARY KEY (`Id`);
 
 --
--- Indices de la tabla `gasto`
+-- Indexes for table `gasto`
 --
 ALTER TABLE `gasto`
   ADD PRIMARY KEY (`Id`),
@@ -302,7 +302,7 @@ ALTER TABLE `gasto`
   ADD KEY `CuentaId` (`CuentaId`);
 
 --
--- Indices de la tabla `gasto_etiqueta`
+-- Indexes for table `gasto_etiqueta`
 --
 ALTER TABLE `gasto_etiqueta`
   ADD PRIMARY KEY (`Id`),
@@ -310,27 +310,27 @@ ALTER TABLE `gasto_etiqueta`
   ADD KEY `EtiquetaId` (`EtiquetaId`);
 
 --
--- Indices de la tabla `ingreso`
+-- Indexes for table `ingreso`
 --
 ALTER TABLE `ingreso`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `CuentaId` (`CuentaId`);
 
 --
--- Indices de la tabla `meta_ahorro`
+-- Indexes for table `meta_ahorro`
 --
 ALTER TABLE `meta_ahorro`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `CuentaId` (`CuentaId`);
 
 --
--- Indices de la tabla `metodo_pago`
+-- Indexes for table `metodo_pago`
 --
 ALTER TABLE `metodo_pago`
   ADD PRIMARY KEY (`Id`);
 
 --
--- Indices de la tabla `presupuesto`
+-- Indexes for table `presupuesto`
 --
 ALTER TABLE `presupuesto`
   ADD PRIMARY KEY (`Id`),
@@ -338,88 +338,88 @@ ALTER TABLE `presupuesto`
   ADD KEY `UsuarioId` (`UsuarioId`);
 
 --
--- Indices de la tabla `usuario`
+-- Indexes for table `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`Id`),
   ADD UNIQUE KEY `Documento` (`Documento`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `categoria`
+-- AUTO_INCREMENT for table `categoria`
 --
 ALTER TABLE `categoria`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT de la tabla `cuenta`
+-- AUTO_INCREMENT for table `cuenta`
 --
 ALTER TABLE `cuenta`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de la tabla `etiqueta`
+-- AUTO_INCREMENT for table `etiqueta`
 --
 ALTER TABLE `etiqueta`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de la tabla `gasto`
+-- AUTO_INCREMENT for table `gasto`
 --
 ALTER TABLE `gasto`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT de la tabla `gasto_etiqueta`
+-- AUTO_INCREMENT for table `gasto_etiqueta`
 --
 ALTER TABLE `gasto_etiqueta`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de la tabla `ingreso`
+-- AUTO_INCREMENT for table `ingreso`
 --
 ALTER TABLE `ingreso`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de la tabla `meta_ahorro`
+-- AUTO_INCREMENT for table `meta_ahorro`
 --
 ALTER TABLE `meta_ahorro`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `metodo_pago`
+-- AUTO_INCREMENT for table `metodo_pago`
 --
 ALTER TABLE `metodo_pago`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `presupuesto`
+-- AUTO_INCREMENT for table `presupuesto`
 --
 ALTER TABLE `presupuesto`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `usuario`
+-- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `cuenta`
+-- Constraints for table `cuenta`
 --
 ALTER TABLE `cuenta`
   ADD CONSTRAINT `cuenta_ibfk_1` FOREIGN KEY (`UsuarioId`) REFERENCES `usuario` (`Id`);
 
 --
--- Filtros para la tabla `gasto`
+-- Constraints for table `gasto`
 --
 ALTER TABLE `gasto`
   ADD CONSTRAINT `gasto_ibfk_1` FOREIGN KEY (`MetodoPagoId`) REFERENCES `metodo_pago` (`Id`),
@@ -427,26 +427,26 @@ ALTER TABLE `gasto`
   ADD CONSTRAINT `gasto_ibfk_3` FOREIGN KEY (`CuentaId`) REFERENCES `cuenta` (`Id`);
 
 --
--- Filtros para la tabla `gasto_etiqueta`
+-- Constraints for table `gasto_etiqueta`
 --
 ALTER TABLE `gasto_etiqueta`
   ADD CONSTRAINT `gasto_etiqueta_ibfk_1` FOREIGN KEY (`GastoId`) REFERENCES `gasto` (`Id`) ON DELETE CASCADE,
   ADD CONSTRAINT `gasto_etiqueta_ibfk_2` FOREIGN KEY (`EtiquetaId`) REFERENCES `etiqueta` (`Id`) ON DELETE CASCADE;
 
 --
--- Filtros para la tabla `ingreso`
+-- Constraints for table `ingreso`
 --
 ALTER TABLE `ingreso`
   ADD CONSTRAINT `ingreso_ibfk_1` FOREIGN KEY (`CuentaId`) REFERENCES `cuenta` (`Id`);
 
 --
--- Filtros para la tabla `meta_ahorro`
+-- Constraints for table `meta_ahorro`
 --
 ALTER TABLE `meta_ahorro`
   ADD CONSTRAINT `meta_ahorro_ibfk_1` FOREIGN KEY (`CuentaId`) REFERENCES `cuenta` (`Id`);
 
 --
--- Filtros para la tabla `presupuesto`
+-- Constraints for table `presupuesto`
 --
 ALTER TABLE `presupuesto`
   ADD CONSTRAINT `presupuesto_ibfk_1` FOREIGN KEY (`CategoriaId`) REFERENCES `categoria` (`Id`),
