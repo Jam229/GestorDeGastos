@@ -14,7 +14,7 @@ Proyecto universitario desarrollado con ASP.NET Core, ADO.NET (MySqlConnector) y
 6. [Servicios no CRUD](#servicios-no-crud)
 7. [Servicio de contraseñas con hash](#servicio-de-contraseñas-con-hash)
 8. [Datos de ejemplo y resultados esperados](#datos-de-ejemplo-y-resultados-esperados)
-10. [Estado del proyecto](#estado-del-proyecto)
+
 
 ## Tecnologías
 
