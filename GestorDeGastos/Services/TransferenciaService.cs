@@ -5,11 +5,11 @@ namespace GestorDeGastos.Services
 {
     public class TransferenciaService
     {
-        private readonly CuentaRepository _cuentaRepository;
+        private readonly CuentaService _cuentaService;
 
         public TransferenciaService()
         {
-            _cuentaRepository = new CuentaRepository();
+            _cuentaService = new CuentaService();
         }
         public ResultadoTransferencia Fallo(string mensaje)
         {
@@ -35,8 +35,8 @@ namespace GestorDeGastos.Services
                 return Fallo("La cuenta de origen y destino deben ser distintas");
             }
            
-            Cuenta? origen = _cuentaRepository.ObtenerPorId(solicitud.CuentaOrigenId);
-            Cuenta? destino = _cuentaRepository.ObtenerPorId(solicitud.CuentaDestinoId);
+            Cuenta? origen = _cuentaService.ObtenerPorId(solicitud.CuentaOrigenId);
+            Cuenta? destino = _cuentaService.ObtenerPorId(solicitud.CuentaDestinoId);
 
             if (origen == null || destino == null)
             {
@@ -57,9 +57,9 @@ namespace GestorDeGastos.Services
                 return Fallo("Saldo insuficiente en la cuenta de origen.");
             }
 
-            // Si todas se cumplen: llamar al repositorio y revisar qué devolvió
 
-            bool exito = _cuentaRepository.Transferir(
+
+            bool exito = _cuentaService.Transferir(
                     solicitud.CuentaOrigenId,
                     solicitud.CuentaDestinoId,
                     solicitud.Monto
@@ -71,8 +71,8 @@ namespace GestorDeGastos.Services
                 return Fallo("No se pudo completar la transferencia.");
             }
 
-            Cuenta? origenActualizada = _cuentaRepository.ObtenerPorId(solicitud.CuentaOrigenId);
-            Cuenta? destinoActualizada = _cuentaRepository.ObtenerPorId(solicitud.CuentaDestinoId);
+            Cuenta? origenActualizada = _cuentaService.ObtenerPorId(solicitud.CuentaOrigenId);
+            Cuenta? destinoActualizada = _cuentaService.ObtenerPorId(solicitud.CuentaDestinoId);
 
 
 

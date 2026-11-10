@@ -10,7 +10,7 @@ namespace GestorDeGastos.Repositories
         {
             _connectionString = "Server=localhost;Port=3306;Database=gestor_gastos;User=root;Password=;";
         }
-        //CREATE
+     
         public int Crear(Cuenta cuenta)
         {
             using var connection = new MySqlConnection(_connectionString);
@@ -33,7 +33,7 @@ namespace GestorDeGastos.Repositories
 
             return id;
         }
-        //READ - obtener todos
+      
 
         public List<Cuenta> ObtenerTodos()
         {
@@ -65,7 +65,7 @@ namespace GestorDeGastos.Repositories
             return cuentas;
         }
 
-        //READ - obtener por Id
+      
 
         public Cuenta? ObtenerPorId(int id)
         {
@@ -96,7 +96,7 @@ namespace GestorDeGastos.Repositories
 
             return null;
         }
-        // UPDATE
+ 
         public bool Actualizar(Cuenta cuenta)
         {
             using var connection = new MySqlConnection(_connectionString);
@@ -124,7 +124,7 @@ namespace GestorDeGastos.Repositories
             return filasAfectadas > 0;
         }
 
-        //DELETE
+
         public bool Eliminar(int id)
         {
             using var connection = new MySqlConnection(_connectionString);
@@ -143,7 +143,7 @@ namespace GestorDeGastos.Repositories
             return filasAfectadas > 0;
         }
 
-        // TRANSFERENCIA
+
 
         public bool Transferir(int cuentaOrigenId, int cuentaDestinoId, decimal monto)
         {

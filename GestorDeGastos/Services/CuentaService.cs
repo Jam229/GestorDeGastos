@@ -36,5 +36,10 @@ namespace GestorDeGastos.Services
         {
             return _repository.Eliminar(id);
         }
+
+        public bool Transferir(int cuentaOrigenId, int cuentaDestinoId, decimal monto)
+        {
+            return _repository.Transferir(cuentaOrigenId, cuentaDestinoId, monto);
+        }
     }
 }

@@ -6,19 +6,19 @@ namespace GestorDeGastos.Services
     public class ReporteService
     {
         private readonly ReporteRepository _repository;
-        private readonly MetaAhorroRepository _metaRepository;
-        private readonly PresupuestoRepository _presupuestoRepository;
-        private readonly CategoriaRepository _categoriaRepository;
+        private readonly MetaAhorroService _metaService;
+        private readonly PresupuestoService _presupuestoService;
+        private readonly CategoriaService _categoriaService;
 
         public ReporteService()
         {
             _repository = new ReporteRepository();
 
-            _metaRepository = new MetaAhorroRepository();
+            _metaService = new MetaAhorroService();
 
-            _presupuestoRepository = new PresupuestoRepository();
+            _presupuestoService = new PresupuestoService();
 
-            _categoriaRepository = new CategoriaRepository();
+            _categoriaService = new CategoriaService();
             
         }
 
@@ -51,7 +51,7 @@ namespace GestorDeGastos.Services
 
         public ProgresoMeta? ObtenerProgresoMeta(int metaId)
         {
-            MetaAhorro? meta = _metaRepository.ObtenerPorId(metaId);
+            MetaAhorro? meta = _metaService.ObtenerPorId(metaId);
 
             if (meta == null)
             {
@@ -81,14 +81,14 @@ namespace GestorDeGastos.Services
 
         public EstadoPresupuesto? ObtenerEstadoPresupuesto(int presupuestoId)
         {
-            Presupuesto? presupuesto = _presupuestoRepository.ObtenerPorId(presupuestoId);
+            Presupuesto? presupuesto = _presupuestoService.ObtenerPorId(presupuestoId);
 
             if (presupuesto == null)
             {
                 return null;
             }
 
-            Categoria? categoria = _categoriaRepository.ObtenerPorId(presupuesto.CategoriaId);
+            Categoria? categoria = _categoriaService.ObtenerPorId(presupuesto.CategoriaId);
 
             decimal gastado = _repository.ObtenerTotalGastosPorCategoria(
                 presupuesto.UsuarioId,

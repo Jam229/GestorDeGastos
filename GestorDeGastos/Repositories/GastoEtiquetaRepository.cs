@@ -12,7 +12,7 @@ namespace GestorDeGastos.Repositories
             _connectionString = "Server=localhost;Port=3306;Database=gestor_gastos;User=root;Password=;";
         }
 
-        // CREATE
+
         public int Crear(GastoEtiqueta gastoEtiqueta)
         {
             using var connection = new MySqlConnection(_connectionString);
