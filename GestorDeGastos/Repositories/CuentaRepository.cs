@@ -10,7 +10,7 @@ namespace GestorDeGastos.Repositories
         {
             _connectionString = "Server=localhost;Port=3306;Database=gestor_gastos;User=root;Password=;";
         }
-     
+
         public int Crear(Cuenta cuenta)
         {
             using var connection = new MySqlConnection(_connectionString);
@@ -33,7 +33,7 @@ namespace GestorDeGastos.Repositories
 
             return id;
         }
-      
+
 
         public List<Cuenta> ObtenerTodos()
         {
@@ -65,7 +65,7 @@ namespace GestorDeGastos.Repositories
             return cuentas;
         }
 
-      
+
 
         public Cuenta? ObtenerPorId(int id)
         {
@@ -96,7 +96,41 @@ namespace GestorDeGastos.Repositories
 
             return null;
         }
- 
+
+        public List<Cuenta> ObtenerPorUsuario(int usuarioId)
+        {
+            var cuentas = new List<Cuenta>();
+
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+
+            string sql = @"
+            SELECT Id, Nombre, NumeroCuenta, Saldo, UsuarioId
+            FROM cuenta
+            WHERE UsuarioId = @UsuarioId;
+        ";
+            using var command = new MySqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@UsuarioId", usuarioId);
+
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var cuenta = new Cuenta(
+                        reader.GetInt32("Id"),
+                        reader.GetString("Nombre"),
+                        reader.GetString("NumeroCuenta"),
+                        reader.GetInt32("Saldo"),
+                        reader.GetInt32("UsuarioId")
+                );
+                cuentas.Add(cuenta);
+            }
+
+            return cuentas;
+
+        }
+
         public bool Actualizar(Cuenta cuenta)
         {
             using var connection = new MySqlConnection(_connectionString);

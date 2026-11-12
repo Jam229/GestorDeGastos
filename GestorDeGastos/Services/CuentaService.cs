@@ -27,6 +27,11 @@ namespace GestorDeGastos.Services
             return _repository.ObtenerPorId(id);
         }
 
+        public List<Cuenta> ObtenerPorUsuario(int usuarioId)
+        {
+            return _repository.ObtenerPorUsuario(usuarioId);
+        }
+
         public bool Actualizar(Cuenta cuenta)
         {
             return _repository.Actualizar(cuenta);

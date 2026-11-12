@@ -32,6 +32,13 @@ namespace GestorDeGastos.Controllers
             return this._service.ObtenerPorId(id);
         }
 
+        // GET: api/Cuenta/usuario/5
+        [HttpGet("usuario/{usuarioId}")]
+        public List<Cuenta> GetPorUsuario(int usuarioId)
+        {
+            return _service.ObtenerPorUsuario(usuarioId);
+        }
+
         // POST api/<CuentaController>
         [HttpPost]
         public int Post([FromBody] Cuenta cuenta)
